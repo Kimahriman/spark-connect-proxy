@@ -1,0 +1,23 @@
+[package]
+name = "spark-connect-proxy"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+axum = "0.7"
+futures-util = "0.3"
+http = "1"
+http-body-util = "0.1"
+hyper = { version = "1", features = ["full"] }
+hyper-util = { version = "0.1", features = ["full"] }
+rustls = "0.22"
+rustls-pemfile = "2"
+rustls-pki-types = "1"
+serde = { version = "1", features = ["derive"] }
+tokio = { version = "1", features = ["full"] }
+tokio-rustls = "0.25"
+tower = "0.4"
+tower-http = { version = "0.5", features = ["auth"] }
+uuid = { version = "1", features = ["v4"] }
