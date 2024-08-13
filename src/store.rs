@@ -18,6 +18,10 @@ pub trait SessionStore: Send + Sync {
 
     fn get_session(&self, username: &str, id: u64) -> Option<Session>;
 
+    fn get_session_by_token(&self, token: &str) -> Option<Session>;
+
+    fn set_session_addr(&self, token: &str, addr: String);
+
     fn list_sessions(&self, username: &str) -> Vec<Session>;
 
     fn delete_session(&self, username: &str, id: u64);
@@ -57,6 +61,29 @@ impl SessionStore for InMemorySessionStore {
             .get(username)
             .and_then(|sessions| sessions.get(&id))
             .cloned()
+    }
+
+    fn get_session_by_token(&self, token: &str) -> Option<Session> {
+        self.sessions
+            .lock()
+            .unwrap()
+            .values()
+            .flat_map(|sessions| sessions.values())
+            .find(|session| session.token == token)
+            .cloned()
+    }
+
+    fn set_session_addr(&self, token: &str, addr: String) {
+        if let Some(session) = self
+            .sessions
+            .lock()
+            .unwrap()
+            .values_mut()
+            .flat_map(|sessions| sessions.values_mut())
+            .find(|session| session.token == token)
+        {
+            session.addr = Some(addr)
+        }
     }
 
     fn list_sessions(&self, username: &str) -> Vec<Session> {

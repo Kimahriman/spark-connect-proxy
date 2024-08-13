@@ -5,7 +5,7 @@ from pyspark.sql.connect.client.core import DefaultChannelBuilder
 class TokenInterceptor(grpc.UnaryUnaryClientInterceptor, grpc.UnaryStreamClientInterceptor, grpc.StreamUnaryClientInterceptor, grpc.StreamStreamClientInterceptor):
     def _intercept(self, continuation, client_call_details, request):
         if not any((key == 'authorization' for key, _ in client_call_details.metadata)):
-            client_call_details.metadata.append(("authorization", "Bearer deadbeef"))
+            client_call_details.metadata.append(("authorization", "Bearer 497532ba-406b-4e35-bb77-75eebbda962b"))
         print(client_call_details.metadata, client_call_details.credentials)
         return continuation(client_call_details, request)
 
